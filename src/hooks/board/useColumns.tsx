@@ -1,3 +1,4 @@
+import _ from "lodash";
 import { useRef } from "react";
 import { useRecoilValue, useRecoilState } from "recoil";
 
@@ -12,17 +13,14 @@ const useColumns = () => {
   const dragOverColumn = useRef<string | null>();
 
   const handleColumnDragStart = (columnId: string) => {
-    console.log("col ", columnId);
-
     dragColumn.current = columnId;
   };
 
   const handleColumnDragOver = (columnId: string) => {
-    console.log("drag over ", columnId);
     dragOverColumn.current = columnId;
   };
 
-  const updateColumn = (
+  const updateColumns = (
     targetColumnId: string,
     overColumnId: string
   ): Column[] => {
@@ -45,10 +43,19 @@ const useColumns = () => {
     });
   };
 
+  const updateColumnName = (columnId: string, updatedName: string) => {
+    const updateColumns = _.cloneDeep(columns);
+
+    const columnIdx = columns.findIndex((column) => column.id === columnId);
+    updateColumns[columnIdx].name = updatedName;
+
+    setColumns(updateColumns);
+  };
+
   const handleColumnDrop = (e: any) => {
     console.log(`drop`, dragOverColumn.current, dragColumn.current);
     if (dragColumn.current && dragOverColumn.current) {
-      const updatedColumns = updateColumn(
+      const updatedColumns = updateColumns(
         dragColumn.current,
         dragOverColumn.current
       );
@@ -64,6 +71,7 @@ const useColumns = () => {
     handleColumnDragOver,
     handleColumnDragStart,
     handleColumnDrop,
+    updateColumnName,
   };
 };
 

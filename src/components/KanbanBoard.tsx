@@ -2,6 +2,7 @@ import _ from "lodash";
 import { Flex, Box, Text } from "@chakra-ui/react";
 
 import useBoard from "../hooks/board/useBoard";
+import ColumnHeader from "./ColumnHeader";
 
 const KanbanBoard = () => {
   const {
@@ -28,23 +29,21 @@ const KanbanBoard = () => {
             width={`300px`}
             minHeight={`500px`}
             key={`group-${idx}`}
-            onDragStart={(e) => {
-              handleColumnDragStart(column.id);
-            }}
             onDragEnter={(e) => handleDragEnterColumn(column.id)}
             onDragOver={(e) => {
               handleDragOver(e);
-              handleColumnDragOver(column.id);
             }}
             onDrop={(e) => {
               handleDrop(e);
               handleColumnDrop(e);
             }}
-            draggable
           >
-            <Text fontSize="xl" mb={1}>
-              {column.name}
-            </Text>
+            <ColumnHeader
+              column={column}
+              handleColumnDragStart={handleColumnDragStart}
+              handleColumnDragOver={handleColumnDragOver}
+              handleColumnDrop={handleColumnDrop}
+            />
             {cards
               .filter((item) => item.columnId === column.id)
               .map((item) => (
