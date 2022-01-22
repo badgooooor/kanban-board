@@ -4,12 +4,12 @@ import { atom, selector } from "recoil";
 import { columns } from "../mocks/data";
 
 export const columnState = atom({
-  key: "column",
+  key: "state-columns",
   default: columns ?? [],
 });
 
 export const orderedColumns = selector({
-  key: "orderedColumns",
+  key: "state-ordered-columns",
   get: ({ get }) => {
     const _columns = get(columnState);
 

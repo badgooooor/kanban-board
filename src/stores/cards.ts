@@ -4,12 +4,12 @@ import { atom, selector } from "recoil";
 import { initialItems } from "../mocks/data";
 
 export const cardState = atom({
-  key: "card",
+  key: "state-card",
   default: initialItems,
 });
 
 export const orderedCards = selector({
-  key: "orderedCards",
+  key: "state-card-ordered",
   get: ({ get }) => {
     const _cards = get(cardState);
 
