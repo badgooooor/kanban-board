@@ -1,8 +1,10 @@
 import _ from "lodash";
 import { Flex, Box, Text } from "@chakra-ui/react";
 
-import useBoard from "../hooks/board/useBoard";
 import ColumnHeader from "./ColumnHeader";
+import ColumnCard from "./ColumnCard";
+
+import useBoard from "../hooks/board/useBoard";
 
 const KanbanBoard = () => {
   const {
@@ -46,23 +48,13 @@ const KanbanBoard = () => {
             />
             {cards
               .filter((item) => item.columnId === column.id)
-              .map((item) => (
-                <Box
-                  bgColor={`whiteAlpha.300`}
-                  minHeight={`70px`}
-                  mb={1}
-                  p={2}
-                  key={`item-${item.id}`}
-                  id={`item-${idx}-${item.id}`}
-                  draggable
-                  onDragStart={() => handleDragStart(item)}
-                  onDragOver={() => handleDragOverItem(item)}
-                >
-                  <Text>
-                    {item.name} [{item.order}]
-                  </Text>
-                  <Text fontSize="sm">{item.description}</Text>
-                </Box>
+              .map((card) => (
+                <ColumnCard
+                  key={`card-${card.id}`}
+                  card={card}
+                  handleDragOverItem={handleDragOverItem}
+                  handleDragStart={handleDragStart}
+                />
               ))}
           </Box>
         ))}
