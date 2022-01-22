@@ -12,6 +12,9 @@ const KanbanBoard = () => {
     handleDragOver,
     handleDragOverItem,
     handleDrop,
+    handleColumnDragOver,
+    handleColumnDragStart,
+    handleColumnDrop,
   } = useBoard();
 
   return (
@@ -25,9 +28,19 @@ const KanbanBoard = () => {
             width={`300px`}
             minHeight={`500px`}
             key={`group-${idx}`}
+            onDragStart={(e) => {
+              handleColumnDragStart(column.id);
+            }}
             onDragEnter={(e) => handleDragEnterColumn(column.id)}
-            onDragOver={handleDragOver}
-            onDrop={(e) => handleDrop(e)}
+            onDragOver={(e) => {
+              handleDragOver(e);
+              handleColumnDragOver(column.id);
+            }}
+            onDrop={(e) => {
+              handleDrop(e);
+              handleColumnDrop(e);
+            }}
+            draggable
           >
             <Text fontSize="xl" mb={1}>
               {column.name}

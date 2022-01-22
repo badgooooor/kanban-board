@@ -2,7 +2,12 @@ import useCards from "./useCards";
 import useColumns from "./useColumns";
 
 const useBoard = () => {
-  const { columns } = useColumns();
+  const {
+    columns,
+    handleColumnDragOver,
+    handleColumnDragStart,
+    handleColumnDrop,
+  } = useColumns();
   const {
     cards,
     handleDragStart,
@@ -20,6 +25,9 @@ const useBoard = () => {
     handleDragOver,
     handleDragOverItem,
     handleDrop,
+    handleColumnDragOver,
+    handleColumnDragStart,
+    handleColumnDrop,
   };
 };
 

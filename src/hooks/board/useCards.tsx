@@ -69,6 +69,9 @@ const useCards = () => {
     if (selected) {
       updateItem(selected, dragOverGroup.current);
     }
+    dragOverItem.current = null;
+    dragOverGroup.current = null;
+    dragData.current = null;
   };
 
   return {
