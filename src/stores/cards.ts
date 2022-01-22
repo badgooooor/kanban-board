@@ -16,3 +16,12 @@ export const orderedCards = selector({
     return _.orderBy(_cards, ["columnId", "order"], ["asc", "asc"]);
   },
 });
+
+export const columnCardsLength = selector({
+  key: "state-column-card-length",
+  get: ({ get }) => {
+    const _cards = get(cardState);
+
+    return _.countBy(_cards, "columnId");
+  },
+});

@@ -1,6 +1,7 @@
 import _ from "lodash";
 import { useRef } from "react";
 import { useRecoilValue, useRecoilState } from "recoil";
+import { columnCardsLength } from "../../stores/cards";
 
 import { columnState, orderedColumns } from "../../stores/columns";
 import { Column } from "../../types/KanbanBoard";
@@ -8,6 +9,7 @@ import { Column } from "../../types/KanbanBoard";
 const useColumns = () => {
   const [, setColumns] = useRecoilState(columnState);
   const columns = useRecoilValue(orderedColumns);
+  const columnsLength = useRecoilValue(columnCardsLength);
 
   const dragColumn = useRef<string | null>();
   const dragOverColumn = useRef<string | null>();
@@ -44,16 +46,33 @@ const useColumns = () => {
   };
 
   const updateColumnName = (columnId: string, updatedName: string) => {
-    const updateColumns = _.cloneDeep(columns);
+    const updatedColumns = _.cloneDeep(columns);
 
     const columnIdx = columns.findIndex((column) => column.id === columnId);
-    updateColumns[columnIdx].name = updatedName;
+    updatedColumns[columnIdx].name = updatedName;
 
-    setColumns(updateColumns);
+    setColumns(updatedColumns);
+  };
+
+  const deleteColumn = (columnId: string) => {
+    const cardListLength = columnsLength[columnId] ?? 0;
+
+    if (cardListLength === 0) {
+      const updatedColumns = _.cloneDeep(columns).filter(
+        (column) => column.id !== columnId
+      );
+
+      setColumns(updatedColumns);
+    }
+  };
+
+  const canDelete = (columnId: string) => {
+    const cardListLength = columnsLength[columnId] ?? 0;
+
+    return cardListLength === 0;
   };
 
   const handleColumnDrop = (e: any) => {
-    console.log(`drop`, dragOverColumn.current, dragColumn.current);
     if (dragColumn.current && dragOverColumn.current) {
       const updatedColumns = updateColumns(
         dragColumn.current,
@@ -72,6 +91,8 @@ const useColumns = () => {
     handleColumnDragStart,
     handleColumnDrop,
     updateColumnName,
+    canDelete,
+    deleteColumn,
   };
 };
 

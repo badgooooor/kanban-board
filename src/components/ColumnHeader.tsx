@@ -1,6 +1,6 @@
 import { Flex, Box, Text, Input } from "@chakra-ui/react";
-import { MdModeEditOutline, MdClose } from "react-icons/md";
-import { useState } from "react";
+import { MdModeEditOutline, MdClose, MdDelete } from "react-icons/md";
+import { useMemo, useState } from "react";
 
 import { Column } from "../types/KanbanBoard";
 import useColumns from "../hooks/board/useColumns";
@@ -21,7 +21,16 @@ const ColumnHeader = ({
   const [editMode, setEditMode] = useState<boolean>(false);
   const [columnName, setColumnName] = useState<string>(column.name);
 
-  const { updateColumnName } = useColumns();
+  const {
+    updateColumnName,
+    canDelete: _canDelete,
+    deleteColumn,
+  } = useColumns();
+
+  const canDelete: boolean = useMemo(
+    () => _canDelete(column.id),
+    [_canDelete, column.id]
+  );
 
   const toggleEditMode = () => {
     if (editMode === true) {
@@ -63,7 +72,12 @@ const ColumnHeader = ({
           {!editMode ? (
             <MdModeEditOutline onClick={toggleEditMode} />
           ) : (
-            <MdClose onClick={toggleEditMode} />
+            <>
+              {canDelete && (
+                <MdDelete onClick={() => deleteColumn(column.id)} />
+              )}
+              <MdClose onClick={toggleEditMode} />
+            </>
           )}
         </Flex>
       </Flex>
