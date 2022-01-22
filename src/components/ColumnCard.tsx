@@ -1,6 +1,7 @@
-import { Box, Text, useDisclosure } from "@chakra-ui/react";
+import { Box, Text, Flex, Spacer, useDisclosure } from "@chakra-ui/react";
 
 import CardDialog from "./modals/CardDialog";
+import StatusBadge from "./StatusBadge";
 
 import { Card } from "../types/KanbanBoard";
 
@@ -26,7 +27,11 @@ const ColumnCard = ({ card, handleDragStart, handleDragOverItem }: Props) => {
       onClick={onOpen}
       draggable
     >
-      <Text>{card.name}</Text>
+      <Flex alignItems="center">
+        <Text>{card.name}</Text>
+        <Spacer />
+        <StatusBadge status={card.status} />
+      </Flex>
       <Text fontSize="sm">{card.description}</Text>
 
       <CardDialog isOpen={isOpen} onClose={onClose} card={card} />
