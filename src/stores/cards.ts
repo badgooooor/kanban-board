@@ -21,7 +21,11 @@ export const columnCardsLength = selector({
   key: "state-column-card-length",
   get: ({ get }) => {
     const _cards = get(cardState);
+    const columnLength = _.countBy(_cards, "columnId");
 
-    return _.countBy(_cards, "columnId");
+    return {
+      columnLength: columnLength,
+      totalLength: _.sum(_.values(columnLength)),
+    };
   },
 });
