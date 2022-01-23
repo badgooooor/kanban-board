@@ -5,11 +5,12 @@ import { columnCardsLength } from "../../stores/cards";
 
 import { columnState, orderedColumns } from "../../stores/columns";
 import { Column } from "../../types/KanbanBoard";
+import { v4 as uuidv4 } from "uuid";
 
 const useColumns = () => {
   const [, setColumns] = useRecoilState(columnState);
   const columns = useRecoilValue(orderedColumns);
-  const columnsLength = useRecoilValue(columnCardsLength);
+  const { columnLength, totalLength } = useRecoilValue(columnCardsLength);
 
   const dragColumn = useRef<string | null>();
   const dragOverColumn = useRef<string | null>();
@@ -55,7 +56,7 @@ const useColumns = () => {
   };
 
   const deleteColumn = (columnId: string) => {
-    const cardListLength = columnsLength[columnId] ?? 0;
+    const cardListLength = columnLength[columnId] ?? 0;
 
     if (cardListLength === 0) {
       const updatedColumns = _.cloneDeep(columns).filter(
@@ -67,7 +68,7 @@ const useColumns = () => {
   };
 
   const canDelete = (columnId: string) => {
-    const cardListLength = columnsLength[columnId] ?? 0;
+    const cardListLength = columnLength[columnId] ?? 0;
 
     return cardListLength === 0;
   };
@@ -85,13 +86,24 @@ const useColumns = () => {
     dragOverColumn.current = null;
   };
 
+  const createColumn = (name: string) => {
+    const newColumn: Column = {
+      id: uuidv4(),
+      order: totalLength + 1,
+      name: name,
+    };
+
+    setColumns([...columns, newColumn]);
+  };
+
   return {
     columns,
     handleColumnDragOver,
     handleColumnDragStart,
     handleColumnDrop,
-    updateColumnName,
     canDelete,
+    createColumn,
+    updateColumnName,
     deleteColumn,
   };
 };
