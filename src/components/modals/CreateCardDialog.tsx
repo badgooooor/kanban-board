@@ -93,7 +93,7 @@ const CreateCardDialog = ({ isOpen, onClose }: Props) => {
               </FormLabel>
               <Switch
                 id="card-status"
-                isChecked={status === "open"}
+                isChecked={value.status === "open"}
                 onChange={handleStatusChanged}
               />
             </FormControl>

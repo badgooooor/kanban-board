@@ -9,6 +9,7 @@ import {
 import { MdPlaylistAdd } from "react-icons/md";
 import { IoCreateOutline } from "react-icons/io5";
 import CreateCardDialog from "../modals/CreateCardDialog";
+import CreateColumnDialog from "../modals/CreateColumnDialog";
 
 const Header = () => {
   const {
@@ -41,11 +42,16 @@ const Header = () => {
           colorScheme="green"
           variant="solid"
           size={"sm"}
+          onClick={onCreateColumnOpen}
         >
           New column
         </Button>
       </Stack>
       <CreateCardDialog isOpen={isCreateCardOpen} onClose={onCreateCardClose} />
+      <CreateColumnDialog
+        isOpen={isCreateColumnOpen}
+        onClose={onCreateColumnClose}
+      />
     </Flex>
   );
 };
