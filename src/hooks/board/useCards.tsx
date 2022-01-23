@@ -86,6 +86,32 @@ const useCards = () => {
     dragData.current = null;
   };
 
+  const removeCardFromList = (toBeDeletedCard: Card) => {
+    const updatedCardColumnList = cards
+      .filter(
+        (card) =>
+          card.columnId === toBeDeletedCard.columnId &&
+          card.id !== toBeDeletedCard.id
+      )
+      .map((card, idx) => {
+        return {
+          ...card,
+          order: idx + 1,
+        };
+      });
+
+    return updatedCardColumnList;
+  };
+
+  const removeCard = (toBeDeletedCard: Card) => {
+    const cardsWithToBeDeletedCard = removeCardFromList(toBeDeletedCard);
+    const cardsWithoutUpdatedOrders = items.filter(
+      (card) => card.columnId !== toBeDeletedCard.columnId
+    );
+
+    setItems([...cardsWithToBeDeletedCard, ...cardsWithoutUpdatedOrders]);
+  };
+
   return {
     cards,
     handleDragStart,
@@ -95,6 +121,7 @@ const useCards = () => {
     handleDrop,
     createCard,
     updateCard,
+    removeCard,
   };
 };
 

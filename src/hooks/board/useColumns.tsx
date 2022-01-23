@@ -96,6 +96,12 @@ const useColumns = () => {
     setColumns([...columns, newColumn]);
   };
 
+  const getColumn = (columnId: string) => {
+    const index = columns.findIndex((column) => column.id === columnId);
+
+    return columns[index];
+  };
+
   return {
     columns,
     handleColumnDragOver,
@@ -103,6 +109,7 @@ const useColumns = () => {
     handleColumnDrop,
     canDelete,
     createColumn,
+    getColumn,
     updateColumnName,
     deleteColumn,
   };
