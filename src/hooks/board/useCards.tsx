@@ -54,7 +54,11 @@ const useCards = () => {
     });
   };
 
-  const updateItems = (targetItem: Card, columnId: string) => {
+  const createCard = (newCard: Card) => {
+    setItems([...cards, newCard]);
+  };
+
+  const updateCardList = (targetItem: Card, columnId: string) => {
     const cardsWithoutUpdatedOrders = items.filter(
       (card) => card.columnId !== columnId && targetItem.id !== card.id
     );
@@ -75,7 +79,7 @@ const useCards = () => {
     const selected = dragData.current;
 
     if (selected) {
-      updateItems(selected, dragOverGroup.current);
+      updateCardList(selected, dragOverGroup.current);
     }
     dragOverItem.current = null;
     dragOverGroup.current = null;
@@ -89,6 +93,7 @@ const useCards = () => {
     handleDragOver,
     handleDragOverItem,
     handleDrop,
+    createCard,
     updateCard,
   };
 };
