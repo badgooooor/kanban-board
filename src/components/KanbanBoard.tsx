@@ -1,5 +1,5 @@
 import _ from "lodash";
-import { Flex, Box, Text } from "@chakra-ui/react";
+import { Flex, Box } from "@chakra-ui/react";
 
 import ColumnHeader from "./ColumnHeader";
 import ColumnCard from "./ColumnCard";

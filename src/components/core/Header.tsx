@@ -1,3 +1,4 @@
+import _ from "lodash";
 import {
   Flex,
   Stack,
@@ -6,12 +7,17 @@ import {
   Spacer,
   useDisclosure,
 } from "@chakra-ui/react";
-import { MdPlaylistAdd } from "react-icons/md";
+import Link from "next/link";
+import { useRouter } from "next/router";
+import { MdList, MdPlaylistAdd, MdFolder } from "react-icons/md";
 import { IoCreateOutline } from "react-icons/io5";
+
 import CreateCardDialog from "../modals/CreateCardDialog";
 import CreateColumnDialog from "../modals/CreateColumnDialog";
 
 const Header = () => {
+  const router = useRouter();
+
   const {
     isOpen: isCreateCardOpen,
     onOpen: onCreateCardOpen,
@@ -22,6 +28,36 @@ const Header = () => {
     onOpen: onCreateColumnOpen,
     onClose: onCreateColumnClose,
   } = useDisclosure();
+
+  const renderPageButton = () => {
+    if (_.includes(router.pathname, "archive")) {
+      return (
+        <Link href="/" passHref>
+          <Button
+            leftIcon={<MdList />}
+            colorScheme="gray"
+            variant="solid"
+            size={"sm"}
+          >
+            Board
+          </Button>
+        </Link>
+      );
+    } else {
+      return (
+        <Link href="/archive" passHref>
+          <Button
+            leftIcon={<MdFolder />}
+            colorScheme="gray"
+            variant="solid"
+            size={"sm"}
+          >
+            Archives
+          </Button>
+        </Link>
+      );
+    }
+  };
 
   return (
     <Flex m={3} mb={0} py={2}>
@@ -46,6 +82,7 @@ const Header = () => {
         >
           New column
         </Button>
+        {renderPageButton()}
       </Stack>
       <CreateCardDialog isOpen={isCreateCardOpen} onClose={onCreateCardClose} />
       <CreateColumnDialog

@@ -13,3 +13,13 @@ export type Card = {
   order: number;
   columnId: string;
 };
+
+export type ArchivedCard = {
+  id: string;
+  name: string;
+  description: string;
+  createdAt: Date;
+  status: "open" | "closed";
+  order: number;
+  columnSnapshot: Column;
+};

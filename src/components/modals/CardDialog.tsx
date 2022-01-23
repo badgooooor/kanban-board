@@ -15,8 +15,10 @@ import {
   FormLabel,
   Switch,
 } from "@chakra-ui/react";
-import { useState } from "react";
+import { useMemo, useState } from "react";
+import useArchive from "../../hooks/archive/useArchive";
 import useCards from "../../hooks/board/useCards";
+import useColumns from "../../hooks/board/useColumns";
 
 import { Card } from "../../types/KanbanBoard";
 import StatusBadge from "../StatusBadge";
@@ -32,7 +34,13 @@ const CardDialog = ({ isOpen, onClose, card }: Props) => {
   const [description, setDescription] = useState<string>(card.description);
   const [status, setStatus] = useState<"open" | "closed">(card.status);
 
-  const { updateCard } = useCards();
+  const { updateCard, removeCard } = useCards();
+  const { getColumn } = useColumns();
+  const { createArchiveCard } = useArchive();
+
+  const cardColumn = useMemo(() => {
+    return getColumn(card.columnId);
+  }, [getColumn, card.columnId]);
 
   const handleClose = () => {
     updateCard({
@@ -41,6 +49,19 @@ const CardDialog = ({ isOpen, onClose, card }: Props) => {
       description,
       status,
     });
+    onClose();
+  };
+
+  const handleArchiveAndClose = () => {
+    createArchiveCard(
+      {
+        ...card,
+        name,
+        description,
+      },
+      cardColumn
+    );
+    removeCard(card);
     onClose();
   };
 
@@ -99,6 +120,9 @@ const CardDialog = ({ isOpen, onClose, card }: Props) => {
         <ModalFooter>
           <Button colorScheme="blue" mr={3} onClick={handleClose}>
             Save
+          </Button>
+          <Button colorScheme="gray" mr={3} onClick={handleArchiveAndClose}>
+            Archive
           </Button>
         </ModalFooter>
       </ModalContent>
