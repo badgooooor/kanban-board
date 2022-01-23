@@ -63,7 +63,7 @@ const CardDialog = ({ isOpen, onClose, card }: Props) => {
   };
 
   return (
-    <Modal isOpen={isOpen} onClose={handleClose}>
+    <Modal isOpen={isOpen} onClose={onClose}>
       <ModalOverlay />
       <ModalContent>
         <ModalHeader>
@@ -100,7 +100,6 @@ const CardDialog = ({ isOpen, onClose, card }: Props) => {
           <Button colorScheme="blue" mr={3} onClick={handleClose}>
             Save
           </Button>
-          {/* <Button variant="ghost">Secondary Action</Button> */}
         </ModalFooter>
       </ModalContent>
     </Modal>
