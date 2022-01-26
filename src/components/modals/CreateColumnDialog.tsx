@@ -22,15 +22,22 @@ type Props = {
 };
 
 const CreateColumnDialog = ({ isOpen, onClose }: Props) => {
-  const { name, handleNameChanged } = useCreateColumn();
+  const { name, nameError, resetForm, handleNameChanged } = useCreateColumn();
   const { createColumn } = useColumns();
-  const handleClose = () => {
+
+  const handleCreateColumn = () => {
     createColumn(name);
+    resetForm();
+    onClose();
+  };
+
+  const handleClose = () => {
+    resetForm();
     onClose();
   };
 
   return (
-    <Modal isOpen={isOpen} onClose={onClose}>
+    <Modal isOpen={isOpen} onClose={handleClose}>
       <ModalOverlay />
       <ModalContent>
         <ModalHeader>
@@ -47,12 +54,17 @@ const CreateColumnDialog = ({ isOpen, onClose }: Props) => {
               value={name}
               placeholder="Name"
               onChange={handleNameChanged}
+              isInvalid={nameError}
             />
           </Stack>
         </ModalBody>
-
         <ModalFooter>
-          <Button colorScheme="blue" mr={3} onClick={handleClose}>
+          <Button
+            colorScheme="blue"
+            mr={3}
+            onClick={handleCreateColumn}
+            disabled={nameError}
+          >
             Save
           </Button>
         </ModalFooter>
