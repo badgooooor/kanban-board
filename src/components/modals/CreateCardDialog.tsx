@@ -36,6 +36,8 @@ const CreateCardDialog = ({ isOpen, onClose }: Props) => {
 
   const {
     value,
+    nameError,
+    resetForm,
     handleColumnChanged,
     handleDescriptionChanged,
     handleNameChanged,
@@ -43,7 +45,8 @@ const CreateCardDialog = ({ isOpen, onClose }: Props) => {
   } = useCreateCard(columnList);
 
   const { createCard } = useCards();
-  const handleClose = () => {
+
+  const handleCreateCard = () => {
     createCard({
       id: uuidv4(),
       columnId: value.column,
@@ -53,6 +56,11 @@ const CreateCardDialog = ({ isOpen, onClose }: Props) => {
       createdAt: new Date(),
       order: 0,
     });
+    resetForm();
+    onClose();
+  };
+
+  const handleClose = () => {
     onClose();
   };
 
@@ -81,6 +89,7 @@ const CreateCardDialog = ({ isOpen, onClose }: Props) => {
               value={value.name}
               placeholder="Name"
               onChange={handleNameChanged}
+              isInvalid={nameError}
             />
             <Input
               value={value.description}
@@ -101,7 +110,7 @@ const CreateCardDialog = ({ isOpen, onClose }: Props) => {
         </ModalBody>
 
         <ModalFooter>
-          <Button colorScheme="blue" mr={3} onClick={handleClose}>
+          <Button colorScheme="blue" mr={3} onClick={handleCreateCard}>
             Save
           </Button>
         </ModalFooter>

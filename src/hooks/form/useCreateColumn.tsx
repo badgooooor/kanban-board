@@ -6,7 +6,7 @@ const useCreateColumn = () => {
 
   const nameError = useMemo(() => {
     return name.length === 0 && hasFilled;
-  }, [name]);
+  }, [name, hasFilled]);
 
   const handleNameChanged = (e: ChangeEvent<HTMLInputElement>) => {
     e.preventDefault();

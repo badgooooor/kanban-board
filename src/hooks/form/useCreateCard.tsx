@@ -1,4 +1,4 @@
-import { ChangeEvent, useState } from "react";
+import { ChangeEvent, useEffect, useMemo, useState } from "react";
 import { Column } from "../../types/KanbanBoard";
 
 const useCreateCard = (columnList: Column[]) => {
@@ -6,6 +6,25 @@ const useCreateCard = (columnList: Column[]) => {
   const [name, setName] = useState<string>("");
   const [description, setDescription] = useState<string>("");
   const [status, setStatus] = useState<"open" | "closed">("open");
+  const [hasFilled, setHasFilled] = useState<boolean>(false);
+
+  const nameError = useMemo(() => {
+    return name.length === 0 && hasFilled;
+  }, [name, hasFilled]);
+
+  const resetForm = () => {
+    setName("");
+    setDescription("");
+    setStatus("open");
+    setColumn(columnList[0].id);
+    setHasFilled(false);
+  };
+
+  useEffect(() => {
+    if (name.length > 1 && !hasFilled) {
+      setHasFilled(true);
+    }
+  }, [name, hasFilled]);
 
   const handleNameChanged = (e: ChangeEvent<HTMLInputElement>) => {
     e.preventDefault();
@@ -36,6 +55,8 @@ const useCreateCard = (columnList: Column[]) => {
       description,
       status,
     },
+    nameError,
+    resetForm,
     handleNameChanged,
     handleDescriptionChanged,
     handleStatusChanged,
