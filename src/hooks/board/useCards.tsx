@@ -8,8 +8,8 @@ import { cardState, orderedCards } from "../../stores/cards";
 import { Card } from "../../types/KanbanBoard";
 
 const useCards = () => {
-  const [items, setItems] = useRecoilState(cardState);
-  const cards = useRecoilValue(orderedCards);
+  const [, setItems] = useRecoilState(cardState);
+  const cardList = useRecoilValue(orderedCards);
 
   const dragData = useRef<Card | null>();
   const dragOverItem = useRef<Card | null>();
@@ -32,16 +32,16 @@ const useCards = () => {
   };
 
   const getSortedColumnCardList = (
-    targetItem: Card,
+    targetCard: Card,
     columnId: string
   ): Card[] => {
-    const newOrder = cards.filter((card) => card.columnId === columnId);
-    const targetIndex = cards.findIndex(
+    const newOrder = cardList.filter((card) => card.columnId === columnId);
+    const targetIndex = cardList.findIndex(
       (card) => card.id === dragOverItem.current?.id
     );
 
-    const newCards = [...newOrder].filter((item) => item.id !== targetItem.id);
-    const newCard: Card = _.cloneDeep(targetItem);
+    const newCards = [...newOrder].filter((item) => item.id !== targetCard.id);
+    const newCard: Card = _.cloneDeep(targetCard);
 
     newCard.columnId = columnId;
     newCards.splice(targetIndex, 0, newCard);
@@ -55,11 +55,11 @@ const useCards = () => {
   };
 
   const createCard = (newCard: Card) => {
-    setItems([...cards, newCard]);
+    setItems([...cardList, newCard]);
   };
 
   const updateCardList = (targetItem: Card, columnId: string) => {
-    const cardsWithoutUpdatedOrders = items.filter(
+    const cardsWithoutUpdatedOrders = cardList.filter(
       (card) => card.columnId !== columnId && targetItem.id !== card.id
     );
     const cardWithUpdatedOrders = getSortedColumnCardList(targetItem, columnId);
@@ -68,8 +68,8 @@ const useCards = () => {
   };
 
   const updateCard = (updatedCard: Card) => {
-    const newCards = [...cards];
-    const cardIndex = cards.findIndex((card) => card.id === updatedCard.id);
+    const newCards = [...cardList];
+    const cardIndex = cardList.findIndex((card) => card.id === updatedCard.id);
 
     newCards[cardIndex] = updatedCard;
     setItems([...newCards]);
@@ -87,7 +87,7 @@ const useCards = () => {
   };
 
   const removeCardFromList = (toBeDeletedCard: Card) => {
-    const updatedCardColumnList = cards
+    const updatedCardColumnList = cardList
       .filter(
         (card) =>
           card.columnId === toBeDeletedCard.columnId &&
@@ -105,7 +105,7 @@ const useCards = () => {
 
   const removeCard = (toBeDeletedCard: Card) => {
     const cardsWithToBeDeletedCard = removeCardFromList(toBeDeletedCard);
-    const cardsWithoutUpdatedOrders = items.filter(
+    const cardsWithoutUpdatedOrders = cardList.filter(
       (card) => card.columnId !== toBeDeletedCard.columnId
     );
 
@@ -113,7 +113,7 @@ const useCards = () => {
   };
 
   return {
-    cards,
+    cards: cardList,
     handleDragStart,
     handleDragEnterColumn,
     handleDragOver,
