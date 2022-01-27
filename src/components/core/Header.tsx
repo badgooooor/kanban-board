@@ -1,6 +1,7 @@
 import _ from "lodash";
 import {
   Flex,
+  Text,
   Stack,
   Box,
   Button,
@@ -60,8 +61,17 @@ const Header = () => {
   };
 
   return (
-    <Flex m={3} mb={0} py={2}>
-      <Box>Kanban Board</Box>
+    <Flex m={3} mb={0} py={2} alignItems="center">
+      <Box>
+        <Text
+          bgGradient="linear(to-l, #0e3ca5, #5492f7)"
+          bgClip="text"
+          fontSize="lg"
+          fontWeight="extrabold"
+        >
+          KANBAN
+        </Text>
+      </Box>
       <Spacer />
       <Stack direction="row" spacing={2}>
         <Button

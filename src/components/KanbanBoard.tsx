@@ -28,7 +28,7 @@ const KanbanBoard = () => {
           padding={2}
           bgColor="gray.200"
           minWidth={{
-            sm: "99%",
+            sm: "85%",
             md: `300px`,
           }}
           height="fit-content"
@@ -41,6 +41,10 @@ const KanbanBoard = () => {
             handleDrop(e);
             handleColumnDrop(e);
           }}
+          _hover={{
+            boxShadow: "0px 0px 15px 1px rgba(84,146,247,0.5)",
+            transition: "box-shadow 0.5s",
+          }}
         >
           <ColumnHeader
             column={column}
@@ -48,16 +52,18 @@ const KanbanBoard = () => {
             handleColumnDragOver={handleColumnDragOver}
             handleColumnDrop={handleColumnDrop}
           />
-          {cards
-            .filter((item) => item.columnId === column.id)
-            .map((card) => (
-              <ColumnCard
-                key={`card-${card.id}`}
-                card={card}
-                handleDragOverItem={handleDragOverItem}
-                handleDragStart={handleDragStart}
-              />
-            ))}
+          <Box maxHeight={"550px"} overflowY={"scroll"}>
+            {cards
+              .filter((item) => item.columnId === column.id)
+              .map((card) => (
+                <ColumnCard
+                  key={`card-${card.id}`}
+                  card={card}
+                  handleDragOverItem={handleDragOverItem}
+                  handleDragStart={handleDragStart}
+                />
+              ))}
+          </Box>
         </Box>
       ))}
     </Flex>

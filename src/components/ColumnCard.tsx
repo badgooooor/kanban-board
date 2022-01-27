@@ -25,6 +25,10 @@ const ColumnCard = ({ card, handleDragStart, handleDragOverItem }: Props) => {
       onDragStart={() => handleDragStart(card)}
       onDragOver={() => handleDragOverItem(card)}
       onClick={onOpen}
+      _hover={{
+        boxShadow: "0px 0px 15px 1px rgba(14,60,165,0.5)",
+        transition: "box-shadow 0.5s",
+      }}
       draggable
     >
       <Flex alignItems="center">
