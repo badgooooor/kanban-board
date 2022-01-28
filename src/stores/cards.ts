@@ -2,10 +2,12 @@ import _ from "lodash";
 import { atom, selector } from "recoil";
 
 import { initialItems } from "../mocks/data";
+import { localStorageEffect } from "./localStorageEffect";
 
 export const cardState = atom({
   key: "state-card",
   default: initialItems,
+  effects_UNSTABLE: [localStorageEffect("kanban:cards")],
 });
 
 export const orderedCards = selector({
