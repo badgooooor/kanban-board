@@ -61,6 +61,7 @@ const CreateCardDialog = ({ isOpen, onClose }: Props) => {
   };
 
   const handleClose = () => {
+    resetForm();
     onClose();
   };
 
