@@ -43,7 +43,7 @@ const CreateColumnDialog = ({ isOpen, onClose }: Props) => {
         <ModalHeader>
           <Flex alignItems="center">
             <Text fontSize="xl" mr={2}>
-              Create new card
+              Create new column
             </Text>
           </Flex>
         </ModalHeader>
@@ -63,7 +63,7 @@ const CreateColumnDialog = ({ isOpen, onClose }: Props) => {
             colorScheme="blue"
             mr={3}
             onClick={handleCreateColumn}
-            disabled={nameError}
+            disabled={nameError || name.length === 0}
           >
             Save
           </Button>
