@@ -18,7 +18,7 @@ const ColumnCard = ({ card, handleDragStart, handleDragOverItem }: Props) => {
     <Box
       bgColor={`whiteAlpha.300`}
       minHeight={`70px`}
-      mb={1}
+      mb={4}
       p={2}
       key={`item-${card.id}`}
       id={`item-${card.id}`}
@@ -36,7 +36,11 @@ const ColumnCard = ({ card, handleDragStart, handleDragOverItem }: Props) => {
         <Spacer />
         <StatusBadge status={card.status} />
       </Flex>
-      <Text fontSize="sm">{card.description}</Text>
+      <Box maxW={"100%"}>
+        <Text fontSize="sm" maxW={"250px"} textOverflow={"ellipsis"}>
+          {card.description}
+        </Text>
+      </Box>
 
       <CardDialog isOpen={isOpen} onClose={onClose} card={card} />
     </Box>

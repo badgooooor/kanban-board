@@ -15,6 +15,7 @@ import {
   FormLabel,
   Switch,
   Select,
+  Textarea,
 } from "@chakra-ui/react";
 import { useRecoilValue } from "recoil";
 import { v4 as uuidv4 } from "uuid";
@@ -92,7 +93,7 @@ const CreateCardDialog = ({ isOpen, onClose }: Props) => {
               onChange={handleNameChanged}
               isInvalid={nameError}
             />
-            <Input
+            <Textarea
               value={value.description}
               placeholder="Description"
               onChange={handleDescriptionChanged}
@@ -111,7 +112,12 @@ const CreateCardDialog = ({ isOpen, onClose }: Props) => {
         </ModalBody>
 
         <ModalFooter>
-          <Button colorScheme="blue" mr={3} onClick={handleCreateCard}>
+          <Button
+            colorScheme="blue"
+            mr={3}
+            onClick={handleCreateCard}
+            disabled={nameError || value.name.length === 0}
+          >
             Save
           </Button>
         </ModalFooter>

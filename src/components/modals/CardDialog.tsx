@@ -14,6 +14,7 @@ import {
   FormControl,
   FormLabel,
   Switch,
+  Textarea,
 } from "@chakra-ui/react";
 import { useMemo, useState } from "react";
 import useArchive from "../../hooks/archive/useArchive";
@@ -99,7 +100,7 @@ const CardDialog = ({ isOpen, onClose, card }: Props) => {
         <ModalBody>
           <Stack spacing={2}>
             <Input value={name} onChange={handleNameChanged} size="lg" />
-            <Input
+            <Textarea
               value={description}
               onChange={handleDescriptionChanged}
               size="lg"

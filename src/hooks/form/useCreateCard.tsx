@@ -31,7 +31,7 @@ const useCreateCard = (columnList: Column[]) => {
     setName(e.target.value);
   };
 
-  const handleDescriptionChanged = (e: ChangeEvent<HTMLInputElement>) => {
+  const handleDescriptionChanged = (e: ChangeEvent<HTMLTextAreaElement>) => {
     e.preventDefault();
     setDescription(e.target.value);
   };
