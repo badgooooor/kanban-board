@@ -1,4 +1,5 @@
 import {
+  Box,
   Modal,
   ModalOverlay,
   ModalContent,
@@ -16,6 +17,7 @@ import {
   Switch,
   Textarea,
 } from "@chakra-ui/react";
+import dayjs from "dayjs";
 import { useMemo, useState } from "react";
 import useArchive from "../../hooks/archive/useArchive";
 import useCards from "../../hooks/board/useCards";
@@ -95,6 +97,9 @@ const CardDialog = ({ isOpen, onClose, card }: Props) => {
             </Text>
             <StatusBadge status={card.status} />
           </Flex>
+          <Text fontSize="sm" fontWeight="light">
+            Created at : {dayjs(card.createdAt).format("DD/MM/YYYY HH:mm")}
+          </Text>
         </ModalHeader>
         <ModalCloseButton />
         <ModalBody>
